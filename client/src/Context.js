@@ -11,7 +11,9 @@ export class Provider extends Component { /* extends is used to create a sub cla
     //state = {};
 
   //DATA REQUEST METHODS
-  api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) {
+  
+  // api() method makes the GET & POST requests to the REST API. It currently accepts an API endpoint as its first argument (path), followed by the HTTP method, and body, which will contain any data associated with the request.
+  api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) { //credentials = emailAddress & password
     const url = config.apiBaseUrl + path; //configures the request path using the base url defined in config.js which gets passed to the returned fetch method
   
     const options = { //sends a request with the HTTP method, as well as the request headers and a stringified body (if body is provided).
@@ -20,13 +22,21 @@ export class Provider extends Component { /* extends is used to create a sub cla
         'Content-Type': 'application/json; charset=utf-8',
       },
     };
+    
+    if (requiresAuth) { //checks if authorization is needed for the requested endpoint
+      const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`); //btoa method encodes emailAddress and Password credentials passed into the api method as args, as a base-64 encoded ASCII string
+      options.headers['Authorization'] = `Basic ${encodedCredentials}`;//adds basic auth to the header of our api request via options
+    }
 
     if (body !== null) {
-      options.body = JSON.stringify(body);
+      options.body = JSON.stringify(body); //converts pulled data to JSON String (translates the data so the app can use it)
     }
     
     return fetch(url, options); //fetch() accepts an optional second parameter: a configuration object that lets you control a number of different settings you can apply to the request.
   }
+
+  //getUser() makes a GET request to the /users endpoint, and returns a JSON object containing user credentials. 
+  async getUser(emailAddress, password) {}
 
   //STATE CHANGING FUNCTIONS
     // signIn = async (emailAddress, password) => {
