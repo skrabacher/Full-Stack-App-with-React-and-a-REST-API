@@ -31,12 +31,19 @@ export default class UserSignUp extends Component {
             elements={() => ( //render prop
               <React.Fragment>
                 <input 
-                  id="name" 
-                  name="name" 
+                  id="firstName" 
+                  name="firstName" 
                   type="text"
-                  value={name} 
+                  value={firstName} 
                   onChange={this.change} 
-                  placeholder="Name" />
+                  placeholder="First Name" />
+                  <input 
+                  id="lastName" 
+                  name="lastName" 
+                  type="text"
+                  value={lastName} 
+                  onChange={this.change} 
+                  placeholder="Last Name" />
                 <input 
                   id="emailAddress" 
                   name="emailAddress" 
@@ -51,6 +58,13 @@ export default class UserSignUp extends Component {
                   value={password} 
                   onChange={this.change} 
                   placeholder="Password" />
+                <input 
+                  id="confirmPassword" 
+                  name="confirmPassword"
+                  type="confirmPassword"
+                  value={confirmPassword} 
+                  onChange={this.change} 
+                  placeholder="confirmPassword" />
               </React.Fragment>
             )} />
           <p>
@@ -61,4 +75,58 @@ export default class UserSignUp extends Component {
     );
   }
 
+}
+
+//EVENT HANDLERS
+
+change = (event) => { //saves to state, any changes made to the name, email, and password input fields
+  const name = event.target.name;
+  const value = event.target.value;
+
+  this.setState(() => {
+    return {
+      [name]: value
+    };
+  });
+}
+
+submit = () => { //makes the submit handler cleaner and easier to understand using detructuring
+  const { context } = this.props; //extracts the context prop from this.props
+
+  const {
+    name,
+    username,
+    password,
+  } = this.state; // unpacks the name, username and password properties from the state object (this.state) into distinct variables
+  
+  // New user payload
+  const user = {
+    name,
+    username,
+    password,
+  }; //This user object is the new user payload that will be passed to the createUser() method. It uses the ES2015 object shorthand syntax to include the just the key names because the values have the same name as the keys.
+
+  context.jsonData.createUser(user) //createUser() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
+    
+    .then( errors => { //use .then() to get the value of the returned promise and check if it's an error or console lgo successful sign up
+      if (errors.length) {
+        this.setState({ errors }); // OR console.log(errors);
+      } else {
+        context.actions.signIn(username, password) //automatically signs user in when they sign up
+          .then(() => { //signIn() is async & returns a promise so we can use .then() method chaining
+            this.props.history.push('/authenticated'); //redirects user to authenticated page so they know sign up was successful   
+          });
+        // console.log(`${username} is successfully signed up and authenticated!`);
+      }
+    })
+    .catch( err => { // handle rejected promise if createUser() returns a rejected promise
+      console.log(err);
+      this.props.history.push('/error'); // redirects user to error route in event of an error
+    }); 
+}
+
+//If a user decides to cancel registration, we will redirect them back to the home route upon clicking "Cancel".
+cancel = () => {
+  this.props.history.push('/'); //redirects to homepage
+}
 }
