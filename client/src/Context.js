@@ -36,12 +36,27 @@ export class Provider extends Component { /* extends is used to create a sub cla
   }
 
   //getUser() makes a GET request to the /users endpoint, and returns a JSON object containing user credentials. 
-  async getUser(emailAddress, password) {}
+  async getUser(emailAddress, password) {
+    const response = await this.api(`/users`, `GET`, null, true, { emailAddress, password });//uses api method to make request to users route
+    if (response.status === 200) { //if request response is returned OKAY
+      return response.json()//format response to json
+        .then(jsonData => jsonData); // name the response jsonData 
+    } else if (response.status === 401) { //if request can not be authenticated
+      return null; //return nothing
+    } else { // if anything else
+      throw new Error();
+    }
+  }
 
   //STATE CHANGING FUNCTIONS
-    // signIn = async (emailAddress, password) => {
-    //   const user = 
-    // }
+    signIn = async (emailAddress, password) => { 
+      const user = await this.getUser(emailAddress, password); //return format: {name: "<firstName>", emailaddress: "<email>"}
+      if (user !== null) { //if credentials received
+        this.setState({//set global state to show current user
+
+        });
+      }
+    }
 
     // signOut = () => {} //removes the authenticated user and password from the global state.
 
@@ -52,10 +67,8 @@ render() { //if either props or state changes, render will run//RENDER IS requir
 
     //ALL DATA PROVIDED IN CONTEXT
     const value = {
-      data: this.data,
       actions: { // Add the 'actions' property and object
-        signIn: this.signIn, //makes the signIn function available to componenets with context
-        signOut: this.signOut //makes the signOut function available to componenets with context
+        signIn: this.signIn, //makes the signIn function available to components with context
       }
     };
     
