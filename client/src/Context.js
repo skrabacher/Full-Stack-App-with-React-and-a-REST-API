@@ -8,7 +8,7 @@ const Context = React.createContext();
 
 export class Provider extends Component { /* extends is used to create a sub class or child of anoter class, extends from React.Component, (part of Reacts API for component class definition) */
 
-    //state = {};
+  state = {authUser: null};//sets default state to no authorized user
 
   //DATA REQUEST METHODS
   
@@ -52,8 +52,10 @@ export class Provider extends Component { /* extends is used to create a sub cla
     signIn = async (emailAddress, password) => { 
       const user = await this.getUser(emailAddress, password); //return format: {name: "<firstName>", emailaddress: "<email>"}
       if (user !== null) { //if credentials received
-        this.setState({//set global state to show current user
-
+        this.setState(() => {//set global state to show current user
+          return {
+            authUser: user
+          };
         });
       }
     }

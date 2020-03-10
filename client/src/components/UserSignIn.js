@@ -5,18 +5,41 @@ import React, { Component } from 'react'; /*To add React to a stateful component
 
 export default class UserSignIn extends Component {
   
-    render() {
-  
-      return (
-        <div className="App">
-              
-                  <p>
-                  user sign IN page.
-                  </p>
-                  
-              </div>
-      );
-    }
-  
-  }
+state = { //state to hold values entered into form field by users
+  emailAddress: '',
+  password: '',
+}
 
+  render() {
+    const {
+      emailAddress,
+      password,
+    } = this.state;
+
+    return (
+      <div className="bounds">
+        <div className="grid-33 centered signin">
+          <h1>Sign In</h1>
+            
+                <p>
+                user sign IN page.
+                </p>
+                
+        </div>
+      </div>
+    );
+  }
+  //EVENT HANDLERS
+  submit = () => {
+    const { context } = this.props; //extract the context prop from this.props
+    const { emailAddress, password } = this.state; 
+    context.actions.signIn(emailAddress, password)
+      .then(user => {
+        if (user === null) {
+          console.log("sign in error");
+        } else {
+          console.log("sign in successful!");
+        }
+      })
+  }
+}
