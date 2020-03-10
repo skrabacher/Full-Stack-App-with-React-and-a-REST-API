@@ -116,7 +116,7 @@ export default class UserSignUp extends Component {
       password,
     }; //This user object is the new user payload that will be passed to the createUser() method. It uses the ES2015 object shorthand syntax to include the just the key names because the values have the same name as the keys.
 
-    context.createUser(user) //createUser() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
+    context.actions.createUser(user) //createUser() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
       
       .then( errors => { //use .then() to get the value of the returned promise and check if it's an error or console lgo successful sign up
         if (errors.length) {

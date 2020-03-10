@@ -51,6 +51,10 @@ export class Provider extends Component { /* extends is used to create a sub cla
       }
     }
 
+    
+
+  //STATE CHANGING FUNCTIONS
+
     //createUser() makes a POST request, sending new user data to the /users endpoint
     async createUser(user) { //modeled using data.js from React Authentication Workshop
       const response = await this.api('/users', 'POST', user);
@@ -67,7 +71,6 @@ export class Provider extends Component { /* extends is used to create a sub cla
       }
     }
 
-  //STATE CHANGING FUNCTIONS
     signIn = async (emailAddress, password) => { 
       const user = await this.getUser(emailAddress, password); //return format: {name: "<firstName>", emailaddress: "<email>"}
       if (user !== null) { //if credentials received
@@ -94,6 +97,7 @@ render() { //if either props or state changes, render will run//RENDER IS requir
       password: this.state.password,
       actions: { // Add the 'actions' property and object
         signIn: this.signIn, //makes the signIn function available to components with context
+        createUser: this.createUser //makes createUser available to in context
       }
     };
     
