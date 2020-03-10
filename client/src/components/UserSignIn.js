@@ -5,18 +5,20 @@ import React, { Component } from 'react'; /*To add React to a stateful component
 
 export default class UserSignIn extends Component {
   
-state = { //state to hold values entered into form field by users
+state = { //state to hold values entered into form field by users and errors sent from the validation handler
   emailAddress: '',
   password: '',
+  errors: [], //from the form.js validation error handler
 }
 
   render() {
     const {
       emailAddress,
       password,
+      errors,
     } = this.state;
 
-    return (
+    return ( //<Form /> JSX modeled using React Authentication Workshop
       <div class="bounds">
         <div class="grid-33 centered signin">
           <h1>Sign In</h1>
