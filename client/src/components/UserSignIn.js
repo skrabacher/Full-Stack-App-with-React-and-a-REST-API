@@ -29,7 +29,7 @@ state = { //state to hold values entered into form field by users and errors sen
             errors={errors}
             submit={this.submit}
             submitButtonText="Sign In"
-            elements={() => (
+            elements={() => ( //render prop (streamlines DOM formatting)
               <React.Fragment>
                 <input 
                   id="emailAddress" 

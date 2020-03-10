@@ -6,19 +6,26 @@ import { Link } from 'react-router-dom'; //adds functionality for "click here" l
 
 
 export default class UserSignUp extends Component {
+  
   state = { //state to hold values entered into form field by users and errors sent from the validation handler
-    name: '',
+    firstName: '',
+    lastName: '',
     emailAddress: '',
     password: '',
+    confirmPassword: '',
     errors: [],
   }
+  
   render() {
     const {
-      name,
+      firstName,
+      lastName,
       emailAddress,
       password,
-      errors,
+      confirmPassword,
+      errors
     } = this.state;
+
     return ( //<Form /> JSX modeled using React Authentication Workshop
       <div className="bounds">
         <div className="grid-33 centered signin">
@@ -28,7 +35,7 @@ export default class UserSignUp extends Component {
             errors={errors}
             submit={this.submit}
             submitButtonText="Sign Up"
-            elements={() => ( //render prop
+            elements={() => ( //render prop (streamlines DOM formatting)
               <React.Fragment>
                 <input 
                   id="firstName" 
@@ -75,58 +82,62 @@ export default class UserSignUp extends Component {
     );
   }
 
-}
 
-//EVENT HANDLERS
 
-change = (event) => { //saves to state, any changes made to the name, email, and password input fields
-  const name = event.target.name;
-  const value = event.target.value;
+  //EVENT HANDLERS
 
-  this.setState(() => {
-    return {
-      [name]: value
-    };
-  });
-}
+  change = (event) => { //saves to state, any changes made to the firstname, lastname, email, confirmpassword, and password input fields
+    const name = event.target.name;
+    const value = event.target.value;
 
-submit = () => { //makes the submit handler cleaner and easier to understand using detructuring
-  const { context } = this.props; //extracts the context prop from this.props
+    this.setState(() => {
+      return {
+        [name]: value
+      };
+    });
+  }
 
-  const {
-    name,
-    username,
-    password,
-  } = this.state; // unpacks the name, username and password properties from the state object (this.state) into distinct variables
-  
-  // New user payload
-  const user = {
-    name,
-    username,
-    password,
-  }; //This user object is the new user payload that will be passed to the createUser() method. It uses the ES2015 object shorthand syntax to include the just the key names because the values have the same name as the keys.
+  submit = () => { //makes the submit handler cleaner and easier to understand using detructuring
+    const { context } = this.props; //uses destructuring assignment to extract the context prop from this.props
 
-  context.jsonData.createUser(user) //createUser() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
+    const {
+      firstName,
+      lastName,
+      username,
+      password,
+      confirmPassword,
+    } = this.state; // unpacks the name, username and password properties from the state object (this.state) into distinct variables
     
-    .then( errors => { //use .then() to get the value of the returned promise and check if it's an error or console lgo successful sign up
-      if (errors.length) {
-        this.setState({ errors }); // OR console.log(errors);
-      } else {
-        context.actions.signIn(username, password) //automatically signs user in when they sign up
-          .then(() => { //signIn() is async & returns a promise so we can use .then() method chaining
-            this.props.history.push('/authenticated'); //redirects user to authenticated page so they know sign up was successful   
-          });
-        // console.log(`${username} is successfully signed up and authenticated!`);
-      }
-    })
-    .catch( err => { // handle rejected promise if createUser() returns a rejected promise
-      console.log(err);
-      this.props.history.push('/error'); // redirects user to error route in event of an error
-    }); 
-}
+    // New user data to be sent to DB (payload)
+    const user = {
+      firstName,
+      lastName,
+      username,
+      password,
+    }; //This user object is the new user payload that will be passed to the createUser() method. It uses the ES2015 object shorthand syntax to include the just the key names because the values have the same name as the keys.
 
-//If a user decides to cancel registration, we will redirect them back to the home route upon clicking "Cancel".
-cancel = () => {
-  this.props.history.push('/'); //redirects to homepage
-}
+    context.createUser(user) //createUser() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
+      
+      .then( errors => { //use .then() to get the value of the returned promise and check if it's an error or console lgo successful sign up
+        if (errors.length) {
+          this.setState({ errors }); // OR console.log(errors);
+        } else {
+          context.actions.signIn(username, password) //automatically signs user in when they sign up
+            .then(() => { //signIn() is async & returns a promise so we can use .then() method chaining
+              this.props.history.push('/authenticated'); //redirects user to authenticated page so they know sign up was successful   
+            });
+          // console.log(`${username} is successfully signed up and authenticated!`);
+        }
+      })
+      .catch( err => { // handle rejected promise if createUser() returns a rejected promise
+        console.log(err);
+        this.props.history.push('/error'); // redirects user to error route in event of an error
+      }); 
+  }
+
+  //If a user decides to cancel registration, we will redirect them back to the home route upon clicking "Cancel".
+  cancel = () => {
+    this.props.history.push('/'); //redirects to homepage
+  }
+
 }
