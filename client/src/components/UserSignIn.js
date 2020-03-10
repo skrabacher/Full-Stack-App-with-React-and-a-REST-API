@@ -1,7 +1,9 @@
 //Stateful Class Component
 // This component provides the "Sign In" screen by rendering a form that allows a user to sign using their existing account information. The component also renders a "Sign In" button that when clicked signs in the user and a "Cancel" button that returns the user to the default route (i.e. the list of courses).
 import React, { Component } from 'react'; /*To add React to a stateful component:*/
-// import { Link } from 'react-router-dom';
+import Form from './Form.js'; //brings in validation error handling and submit and cancel event handler as well as renders the buttons for submit and cancel
+import { Link } from 'react-router-dom'; //adds functionality for "click here" link to the user sign in page
+
 
 export default class UserSignIn extends Component {
   
@@ -19,18 +21,35 @@ state = { //state to hold values entered into form field by users and errors sen
     } = this.state;
 
     return ( //<Form /> JSX modeled using React Authentication Workshop
-      <div class="bounds">
-        <div class="grid-33 centered signin">
+      <div className="bounds">
+        <div className="grid-33 centered signin">
           <h1>Sign In</h1>
-          <div>
-            <form>
-              <div><input id="emailAddress" name="emailAddress" type="text" class="" placeholder="Email Address" value=""></input></div>
-              <div><input id="password" name="password" type="password" class="" placeholder="Password" value=""></input></div>
-              <div class="grid-100 pad-bottom"><button class="button" type="submit">Sign In</button><button class="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button></div>
-            </form>
-          </div>
-          <p>&nbsp;</p>
-          <p>Don't have a user account? <a href="sign-up.html">Click here</a> to sign up!</p>
+          <Form 
+            cancel={this.cancel}
+            errors={errors}
+            submit={this.submit}
+            submitButtonText="Sign In"
+            elements={() => (
+              <React.Fragment>
+                <input 
+                  id="emailAddress" 
+                  name="emailAddress" 
+                  type="text"
+                  value={emailAddress} 
+                  onChange={this.change} 
+                  placeholder="Email Address" />
+                <input 
+                  id="password" 
+                  name="password"
+                  type="password"
+                  value={password} 
+                  onChange={this.change} 
+                  placeholder="Password" />                
+              </React.Fragment>
+            )} />
+          <p>
+            Don't have a user account? <Link to="/signup">Click here</Link> to sign up!
+          </p>
         </div>
       </div>
     );
