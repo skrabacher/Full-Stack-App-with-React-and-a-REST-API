@@ -56,3 +56,5 @@ export default class Courses extends Component {
       );
     }
   }
+
+  export default Courses;
