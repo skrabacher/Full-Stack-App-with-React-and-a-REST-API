@@ -1,6 +1,7 @@
 //Stateful Class Component
 // This component provides the "Courses" screen by retrieving the list of courses from the REST API's /api/courses route and rendering a list of courses. Each course needs to link to its respective "Course Detail" screen. This component also renders a link to the "Create Course" screen.
 import React, { Component } from 'react'; /*To add React to a stateful component:*/
+import { Link } from 'react-router-dom'; //adds functionality for links to each course and create course
 
 //retrieves data from the REST API
 
@@ -35,22 +36,21 @@ export default class Courses extends Component {
 
       const courseIndex = this.state.courses;
       const courseLinks = courseIndex.map(course =>
-        <div className="grid-33"><a className="course--module course--link" href="course-detail.html">
+        <div className="grid-33"><Link to="/signin" className="course--module course--link" href="course-detail.html">
               <h4 className="course--label">Course</h4>
               <h3 className="course--title">{ course.title }</h3>
-            </a></div>
+            </Link></div>
       )
 
       return (
         <div className="bounds">
-          {/* replace 4 placeholders below with single CourseLinks object that maps over the array */}
-         { courseLinks }
+          { courseLinks }
             {/* LINK TO CREATE COURSE BELOW */}
-          <div className="grid-33"><a className="course--module course--add--module" href="create-course.html">
+          <div className="grid-33"><Link to="/signup" className="course--module course--add--module" href="create-course.html">
               <h3 className="course--add--title"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 13 13" className="add">
                   <polygon points="7,6 7,0 6,0 6,6 0,6 0,7 6,7 6,13 7,13 7,7 13,7 13,6 " />
                 </svg>New Course</h3>
-            </a></div>
+            </Link></div>
         </div>
       
       );
