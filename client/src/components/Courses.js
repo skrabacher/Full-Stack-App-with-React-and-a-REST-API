@@ -6,7 +6,35 @@ import React, { Component } from 'react'; /*To add React to a stateful component
 
 //Pro Tip: Resist the temptation to keep and manage the courses data as global state in the App component. Instead, allow the Courses and CourseDetail components to retrieve their data from the REST API when those components are mounted. Using this approach simplifies the management of the courses data and ensures that the data won't get out of sync with the REST API's persisted data.
 export default class Courses extends Component {
+
+  state = { //state with empty array to hold courses
+    courses: []
+  }
+
+  //makes a GET request to the /courses endpoint and returns array of course objects with these properties: id, title, description, estimatedTime, materialsNeeded
+  async componentDidMount() { 
+    const { context } = this.props; //extracts context from props so we can access context.actions
+    const response = await context.actions.api(`/courses`);//uses api method to make request to courses route
+    if (response.status === 200) { //if request response is returned OKAY
+      return response.json()//format response to json
+        // .then(jsonData => console.log(jsonData)); 
+        .then(jsonData => this.setState({courses: jsonData }));
+    } else if (response.status === 401) { //if request can not be authenticated
+      return null; //return nothing
+    } else { // if anything else
+      throw new Error();
+    }
+  }
+
+  // componentDidMount() {
+  //   context.actions.getCourses()
+  //     .then(response => console.log(response)); 
+  // }
+
     render() {
+
+
+      
       return (
         <div className="bounds">
           <div className="grid-33"><a className="course--module course--link" href="course-detail.html">

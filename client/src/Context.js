@@ -13,7 +13,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
     password: null
   };//sets default state to no authorized user
 
-  //DATA REQUEST METHODS
+  //DATA METHODS
     
     // api() method makes the GET & POST requests to the REST API. It currently accepts an API endpoint as its first argument (path), followed by the HTTP method, and body, which will contain any data associated with the request.
     api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) { //credentials = emailAddress & password
@@ -51,12 +51,8 @@ export class Provider extends Component { /* extends is used to create a sub cla
       }
     }
 
-    
-
-  //STATE CHANGING FUNCTIONS
-
-    //createUser() makes a POST request, sending new user data to the /users endpoint
-    async createUser(user) { //modeled using data.js from React Authentication Workshop
+     //createUser() makes a POST request, sending new user data to the /users endpoint
+     async createUser(user) { //modeled using data.js from React Authentication Workshop
       const response = await this.api('/users', 'POST', user);
       if (response.status === 201) { //if user creation successfull
         return [];  //return empty array
@@ -70,6 +66,11 @@ export class Provider extends Component { /* extends is used to create a sub cla
         throw new Error();
       }
     }
+
+    
+
+
+  //STATE CHANGING FUNCTIONS
 
     signIn = async (emailAddress, password) => { 
       const user = await this.getUser(emailAddress, password); //return format: {name: "<firstName>", emailaddress: "<email>"}
