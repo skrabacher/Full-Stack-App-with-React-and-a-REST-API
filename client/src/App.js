@@ -11,6 +11,8 @@ import UserSignUp from './components/UserSignUp';
 import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
 import Courses from './components/Courses';
+import CourseDetail from './components/CourseDetail';
+
 //import Context
 import withContext from './Context'; // withContext function from Context.js
 
@@ -20,6 +22,8 @@ const UserSignUpWithContext = withContext(UserSignUp); // This connects the User
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignOutWithContext = withContext(UserSignOut);
 const CoursesWithContext = withContext(Courses);
+const CourseDetailWithContext = withContext(CourseDetail);
+
 
 
 export default () => (
@@ -34,6 +38,7 @@ export default () => (
         <Route path="/signup" component={UserSignUpWithContext} />
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signout" component={UserSignOutWithContext} />
+        <Route path="/courses/:id" component={CourseDetailWithContext} /> {/*  will change path to "/courses/:id" once set up */}
         
       </Switch>
     </div>
