@@ -78,7 +78,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
         this.setState(() => {//set global state to show current user
           return {
             authUser: user,
-            password: password,
+            password: encryptedPassword,
           };
         });
       }
@@ -89,7 +89,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
   
 
    
-render() { //if either props or state changes, render will run//RENDER IS required in class components
+  render() { //if either props or state changes, render will run//RENDER IS required in class components
 
     //ALL DATA PROVIDED IN CONTEXT
     const value = {
@@ -97,7 +97,8 @@ render() { //if either props or state changes, render will run//RENDER IS requir
       password: this.state.password,
       actions: { // Add the 'actions' property and object
         signIn: this.signIn, //makes the signIn function available to components with context
-        createUser: this.createUser //makes createUser available to in context
+        createUser: this.createUser, //makes createUser available to in context
+        api: this.api //makes api available in context 
       }
     };
     

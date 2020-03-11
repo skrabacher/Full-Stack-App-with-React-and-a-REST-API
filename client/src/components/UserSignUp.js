@@ -71,7 +71,7 @@ export default class UserSignUp extends Component {
                   type="confirmPassword"
                   value={confirmPassword} 
                   onChange={this.change} 
-                  placeholder="confirmPassword" />
+                  placeholder="Password Confirmation" />
               </React.Fragment>
             )} />
           <p>
@@ -98,12 +98,12 @@ export default class UserSignUp extends Component {
   }
 
   submit = () => { //makes the submit handler cleaner and easier to understand using detructuring
-    const { context } = this.props; //uses destructuring assignment to extract the context prop from this.props
+    const { context } = this.props; //extracts context from props so we can access context.actions
 
     const {
       firstName,
       lastName,
-      username,
+      emailAddress,
       password,
       confirmPassword,
     } = this.state; // unpacks the name, username and password properties from the state object (this.state) into distinct variables
@@ -112,27 +112,32 @@ export default class UserSignUp extends Component {
     const user = {
       firstName,
       lastName,
-      username,
+      emailAddress,
       password,
     }; //This user object is the new user payload that will be passed to the createUser() method. It uses the ES2015 object shorthand syntax to include the just the key names because the values have the same name as the keys.
 
-    context.actions.createUser(user) //createUser() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
-      
+    if (password === confirmPassword) { //if the passwords the user entered do not match, add an error to the errors array in state
+     
+      context.actions.createUser(user) //createUser() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
       .then( errors => { //use .then() to get the value of the returned promise and check if it's an error or console lgo successful sign up
         if (errors.length) {
           this.setState({ errors }); // OR console.log(errors);
         } else {
-          context.actions.signIn(username, password) //automatically signs user in when they sign up
+          context.actions.signIn(emailAddress, password) //automatically signs user in when they sign up
             .then(() => { //signIn() is async & returns a promise so we can use .then() method chaining
-              this.props.history.push('/authenticated'); //redirects user to authenticated page so they know sign up was successful   
+              this.props.history.push('/'); //redirects user to authenticated page so they know sign up was successful   
             });
           // console.log(`${username} is successfully signed up and authenticated!`);
         }
       })
-      .catch( err => { // handle rejected promise if createUser() returns a rejected promise
-        console.log(err);
+      .catch( error => { // handle rejected promise if createUser() returns a rejected promise
+        console.log(error);
         this.props.history.push('/error'); // redirects user to error route in event of an error
       }); 
+    } else {
+    this.setState( {errors: [{message: "Error: Password and Password Confirmation do not match"}]})
+    }
+    
   }
 
   //If a user decides to cancel registration, we will redirect them back to the home route upon clicking "Cancel".

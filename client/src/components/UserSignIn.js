@@ -67,4 +67,9 @@ state = { //state to hold values entered into form field by users and errors sen
         }
       })
   }
+
+   //If a user decides to cancel registration, we will redirect them back to the home route upon clicking "Cancel".
+   cancel = () => {
+    this.props.history.push('/'); //redirects to homepage
+  }
 }
