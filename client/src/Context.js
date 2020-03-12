@@ -54,7 +54,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
      //createUser() makes a POST request, sending new user data to the /users endpoint
      async createUser(user) { //modeled using data.js from React Authentication Workshop
       const response = await this.api('/users', 'POST', user);
-      if (response.status === 201) { //if user creation successfull
+      if (response.status === 201) { //if user creation successful
         return [];  //return empty array
       }
       else if (response.status === 400) {
@@ -69,7 +69,9 @@ export class Provider extends Component { /* extends is used to create a sub cla
     //createCourse() makes a POST request to the REST API, sending new course data to the /routes endpoint
     async createCourse(course) {
       const response = await this.api('/courses', 'POST', course);
-      if (response.status === 400) {
+      if (response.status === 400) { //if course creation successsful
+        return []; //return empty array
+      } else if (response.status == 400) {
         return response.json().then(jsonData => {
           return jsonData.errors;
         });
@@ -108,7 +110,8 @@ export class Provider extends Component { /* extends is used to create a sub cla
       actions: { // Add the 'actions' property and object
         signIn: this.signIn, //makes the signIn function available to components with context
         createUser: this.createUser, //makes createUser available to in context
-        api: this.api //makes api available in context 
+        api: this.api, //makes api available in context
+        createCourse: this.createCourse //makes createUser available to in context
       }
     };
     
