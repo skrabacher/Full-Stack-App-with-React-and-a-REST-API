@@ -1,6 +1,7 @@
 //Stateful Class Component
 // This component provides the "Create Course" screen by rendering a form that allows a user to create a new course. The component also renders a "Create Course" button that when clicked sends a POST request to the REST API's /api/courses route. This component also renders a "Cancel" button that returns the user to the default route (i.e. the list of courses).
 import React, { Component } from 'react'; /*To add React to a stateful component:*/
+import Form from './Form.js'; //brings in validation error handling and submit and cancel event handler as well as renders the buttons for submit and cancel
 
 export default class CreateCourse extends Component {
 
@@ -8,7 +9,8 @@ export default class CreateCourse extends Component {
         title: '',
         description: '',
         estimatedTime: '',
-        materialsNeeded: ''
+        materialsNeeded: '',
+        errors: []
       }
     
       
@@ -19,6 +21,7 @@ export default class CreateCourse extends Component {
             description,
             estimatedTime,
             materialsNeeded,
+            errors
           } = this.state;
 
         return(
@@ -69,6 +72,17 @@ export default class CreateCourse extends Component {
         );
     }
 //EVENT HANDLERS
+    //change
+    change = (event) => { //saves to state, any changes made to the firstname, lastname, email, confirmpassword, and password input fields
+        const name = event.target.name;
+        const value = event.target.value;
+    
+        this.setState(() => {
+          return {
+            [name]: value
+          };
+        });
+      }
     //submit
 
     //cancel
