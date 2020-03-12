@@ -38,7 +38,7 @@ export default class CreateCourse extends Component {
                     <div className="grid-66">
                         <div className="course--header">
                         <h4 className="course--label">Course</h4>
-                        <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..." defaultValue /></div>
+                        <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder="Course title..." defaultValue={""} /></div>
                         <p>By Joe Smith</p>
                         </div>
                         <div className="course--description">
@@ -50,7 +50,7 @@ export default class CreateCourse extends Component {
                         <ul className="course--stats--list">
                             <li className="course--stats--list--item">
                             <h4>Estimated Time</h4>
-                            <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue /></div>
+                            <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={""} /></div>
                             </li>
                             <li className="course--stats--list--item">
                             <h4>Materials Needed</h4>
@@ -68,4 +68,9 @@ export default class CreateCourse extends Component {
  
         );
     }
+//EVENT HANDLERS
+    //submit
+
+    //cancel
+
 }
