@@ -97,7 +97,7 @@ export default class UserSignUp extends Component {
     });
   }
 
-  submit = () => { //makes the submit handler cleaner and easier to understand using detructuring
+  submit = () => { 
     const { context } = this.props; //extracts context from props so we can access context.actions
 
     const {
@@ -125,7 +125,7 @@ export default class UserSignUp extends Component {
         } else {
           context.actions.signIn(emailAddress, password) //automatically signs user in when they sign up
             .then(() => { //signIn() is async & returns a promise so we can use .then() method chaining
-              this.props.history.push('/'); //redirects user to authenticated page so they know sign up was successful   
+              this.props.history.push('/'); //redirects user to home page   
             });
           // console.log(`${username} is successfully signed up and authenticated!`);
         }

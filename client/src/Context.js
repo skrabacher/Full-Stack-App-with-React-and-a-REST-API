@@ -69,9 +69,10 @@ export class Provider extends Component { /* extends is used to create a sub cla
     //createCourse() makes a POST request to the REST API, sending new course data to the /routes endpoint
     async createCourse(course) {
       const response = await this.api('/courses', 'POST', course);
+      console.log('CreateCourse response: ', response);
       if (response.status === 400) { //if course creation successsful
         return []; //return empty array
-      } else if (response.status == 400) {
+      } else if (response.status === 400) {
         return response.json().then(jsonData => {
           return jsonData.errors;
         });

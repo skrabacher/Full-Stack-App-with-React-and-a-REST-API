@@ -41,7 +41,7 @@ export default class CreateCourse extends Component {
 												cancel={this.cancel}
 												errors={errors}
 												submit={this.submit}
-												submitButtonText="Sign Up"
+												submitButtonText="Create Course"
 												elements={() => (
 													<React.Fragment>
 														<div className="grid-66">
@@ -96,9 +96,9 @@ export default class CreateCourse extends Component {
 																</ul>
 																</div>
 														</div>
-														<div className="grid-100 pad-bottom"><button className="button" type="submit">Create Course</button><button className="button button-secondary" onclick="event.preventDefault(); location.href='index.html';">Cancel</button></div>
+													
 													</React.Fragment>
-												)} />//render prop (streamlines DOM formatting)
+												)} />
 											
                     
 								</div>
@@ -121,7 +121,40 @@ export default class CreateCourse extends Component {
         });
       }
     //submit
+		submit = () => {
+			const { context } = this.props; //extracts context from props so we can access context.actions
 
+			const {
+				title,
+				description,
+				estimatedTime,
+				materialsNeeded
+			} = this.state; //unpacks all the data stored in state into distinct variables
+
+    	// New course data to be sent to DB (payload)
+			const course = {
+				title,
+				description,
+				estimatedTime,
+				materialsNeeded
+			};
+
+			context.actions.createCourse(course) //createCourse() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
+				.then( errors => { //use .then() to get the value of the returned promise and check if it's an error
+					if (errors.length) {
+						this.setState({ errors });
+					} else {
+						this.props.history.push('/');
+					}
+				})
+				.catch( error => { // handle rejected promise if createCourse() returns a rejected promise
+					console.log(error);
+					this.props.history.push('/error'); // redirects user to error route in event of an error
+				});
+		}
     //cancel
-
+		//If a user decides to cancel registration, we will redirect them back to the home route upon clicking "Cancel".
+		cancel = () => {
+			this.props.history.push('/'); //redirects to homepage
+		}
 }
