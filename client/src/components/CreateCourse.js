@@ -57,17 +57,18 @@ export default class CreateCourse extends Component {
 																	value={title} 
 																	onChange={this.change}  
 																	placeholder="Course title..." 
-																	defaultValue={""} /></div>
+																	 /></div>
 																<p>By { instructor.firstName } { instructor.lastName }</p>
 																</div>
 																<div className="course--description">
 																<div><textarea 
 																	id="description" 
 																	name="description" 
-																	className placeholder="Course description..." 
+																	className="" 
+																	placeholder="Course description..." 
 																	value={description} 
 																	onChange={this.change}  
-																	defaultValue={""} /></div>
+																	 /></div>
 																</div>
 														</div>
 														<div className="grid-25 grid-right">
@@ -83,17 +84,18 @@ export default class CreateCourse extends Component {
 																			value={estimatedTime} 
 																			onChange={this.change} 
 																			placeholder="Hours" 
-																			defaultValue={""} /></div>
+																			 /></div>
 																		</li>
 																		<li className="course--stats--list--item">
 																		<h4>Materials Needed</h4>
 																		<div><textarea 
 																			id="materialsNeeded" 
 																			name="materialsNeeded" 
-																			className placeholder="List materials..." 
+																			className=""
+																			placeholder="List materials..." 
 																			value={materialsNeeded} 
 																			onChange={this.change} 
-																			defaultValue={""} /></div>
+																			 /></div>
 																		</li>
 																</ul>
 																</div>

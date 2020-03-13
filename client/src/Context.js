@@ -114,7 +114,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
 
    
   render() { //if either props or state changes, render will run//RENDER IS required in class components
-    const { authUser } = this.state;
+    
     //ALL DATA PROVIDED IN CONTEXT
     const value = {
       authUser: this.state.authUser,
