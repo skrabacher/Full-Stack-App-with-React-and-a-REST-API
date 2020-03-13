@@ -15,7 +15,7 @@ export default (props) => { //props from user sign up or user sign in
     elements,
   } = props;
 
-  function handleSubmit(event) { //sign-in/sign-up button submit handler
+  function handleSubmit(event) { //sign-in/sign-up/create-course button submit handler
     event.preventDefault();
     submit();
   }

@@ -10,7 +10,7 @@ const Context = React.createContext();
 export class Provider extends Component { /* extends is used to create a sub class or child of anoter class, extends from React.Component, (part of Reacts API for component class definition) */
 
   state = {
-    authUser: Cookies.getJSON('authenticatedUser') || null,
+    authUser: Cookies.getJSON('authUser') || null,
   };//sets default state to no authorized user
 
   //DATA METHODS
@@ -114,7 +114,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
 
    
   render() { //if either props or state changes, render will run//RENDER IS required in class components
-
+    const { authUser } = this.state;
     //ALL DATA PROVIDED IN CONTEXT
     const value = {
       authUser: this.state.authUser,
@@ -123,7 +123,8 @@ export class Provider extends Component { /* extends is used to create a sub cla
         signIn: this.signIn, //makes the signIn function available to components with context
         createUser: this.createUser, //makes createUser available to in context
         api: this.api, //makes api available in context
-        createCourse: this.createCourse //makes createUser available to in context
+        createCourse: this.createCourse, //makes createUser available to in context
+        signOut: this.signOut //makes the signOut function available to components with context
       }
     };
     

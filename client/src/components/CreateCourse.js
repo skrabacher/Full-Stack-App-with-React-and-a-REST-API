@@ -23,6 +23,8 @@ export default class CreateCourse extends Component {
 					materialsNeeded,
 					errors
 				} = this.state;
+		const instructor = this.props.context.authUser;
+		console.log("instructor: ", instructor);
 
         return(
             <div className="bounds course--detail">
@@ -56,7 +58,7 @@ export default class CreateCourse extends Component {
 																	onChange={this.change}  
 																	placeholder="Course title..." 
 																	defaultValue={""} /></div>
-																<p>By Joe Smith</p>
+																<p>By { instructor.firstName } { instructor.lastName }</p>
 																</div>
 																<div className="course--description">
 																<div><textarea 

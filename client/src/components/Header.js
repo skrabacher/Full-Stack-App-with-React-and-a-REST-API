@@ -3,10 +3,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; //adds functionality for "click here" link to the user sign in page
 
-export default class Header extends React.PureComponent {
+export default class Header extends React.PureComponent { //Performance improvement: adding pure component feature allows use of the shouldcomponentUpdate() lifecycle method which skips re-rendering when the state and props have not changed
   render() {
     const authUser = this.props.context.authUser;
-    console.log("authUser: ", authUser);
+    console.log("authUser status: ", authUser); 
     return (
       <div className="header">
           <div className="bounds">
@@ -15,7 +15,7 @@ export default class Header extends React.PureComponent {
              
               {authUser ?
                 <React.Fragment>
-                  <span>Welcome, {authUser.firstName}!</span>
+                  <span>Welcome, { authUser.firstName }!</span>
                   <Link to="/signout">Sign Out</Link>
                 </React.Fragment>
               :
@@ -24,8 +24,6 @@ export default class Header extends React.PureComponent {
                   <Link className="signin" to="/signin">Sign In</Link>
                 </React.Fragment>
               } 
-            {/* HTML EXAMPLE: <nav><a class="signup" href="sign-up.html">Sign Up</a><a class="signin" href="sign-in.html">Sign In</a></nav> */}
-              
              
             </nav>
           </div>
