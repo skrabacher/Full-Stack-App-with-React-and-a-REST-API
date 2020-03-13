@@ -25,16 +25,19 @@ export class Provider extends Component { /* extends is used to create a sub cla
           'Content-Type': 'application/json; charset=utf-8',
         },
       };
+
+      if (body !== null) {
+        options.body = JSON.stringify(body); //converts pulled data to JSON String (translates the data so the app can use it)
+        console.log("options.body: ", options.body);
+      }
       
       if (requiresAuth) { //checks if authorization is needed for the requested endpoint
         const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`); //btoa method encodes emailAddress and Password credentials passed into the api method as args, as a base-64 encoded ASCII string
         options.headers['Authorization'] = `Basic ${encodedCredentials}`;//adds basic auth to the header of our api request via options
+        console.log("options.header: ", options.header);
+
       }
 
-      if (body !== null) {
-        options.body = JSON.stringify(body); //converts pulled data to JSON String (translates the data so the app can use it)
-      }
-      
       return fetch(url, options); //fetch() accepts an optional second parameter: a configuration object that lets you control a number of different settings you can apply to the request.
     }
 
@@ -67,10 +70,11 @@ export class Provider extends Component { /* extends is used to create a sub cla
     }
 
     //createCourse() makes a POST request to the REST API, sending new course data to the /routes endpoint
-    async createCourse(course) {
-      const response = await this.api('/courses', 'POST', course);
+    async createCourse(course, emailAddress, password) {
+      console.log("Course: ", course)
+      const response = await this.api('/courses', 'POST', course, true, { emailAddress, password }); //api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) credentials = obj w/ emailAddress & password properties
       console.log('CreateCourse response: ', response);
-      if (response.status === 400) { //if course creation successsful
+      if (response.status === 201) { //if course creation successsful
         return []; //return empty array
       } else if (response.status === 400) {
         return response.json().then(jsonData => {
