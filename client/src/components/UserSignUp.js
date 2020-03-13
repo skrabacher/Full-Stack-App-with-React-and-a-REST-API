@@ -119,7 +119,7 @@ export default class UserSignUp extends Component {
     if (password === confirmPassword) { //if the passwords the user entered do not match, add an error to the errors array in state
      
       context.actions.createUser(user) //createUser() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
-      .then( errors => { //use .then() to get the value of the returned promise and check if it's an error or console lgo successful sign up
+      .then( errors => { //use .then() to get the value of the returned promise and check if it's an error
         if (errors.length) {
           this.setState({ errors }); // OR console.log(errors);
         } else {

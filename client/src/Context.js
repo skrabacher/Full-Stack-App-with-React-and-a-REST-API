@@ -1,5 +1,6 @@
 import React, { Component } from 'react'; // adds react features for stateful class component
 import config from './config'; //imports api base url used by the data request methods
+import Cookies from './js-cookie'; //
 
 
 // In React, Context is primarily used when some data needs to be accessible by many components at different nesting levels. Context lets you pass data through the component tree without having to pass props down manually at every level.import React, { Component } from 'react';
@@ -9,8 +10,7 @@ const Context = React.createContext();
 export class Provider extends Component { /* extends is used to create a sub class or child of anoter class, extends from React.Component, (part of Reacts API for component class definition) */
 
   state = {
-    authUser: null,
-    password: null
+    authUser: Cookies.getJSON('authenticatedUser') || null,
   };//sets default state to no authorized user
 
   //DATA METHODS
@@ -94,10 +94,21 @@ export class Provider extends Component { /* extends is used to create a sub cla
             password: encryptedPassword,
           };
         });
+        //Cookies.set - 1st arg: specifies the name of the cookie to set, 2nd arg: specifies the value to store in the cookie. In this case, store the stringified user object. Last arg: an object as the last argument to set additional cookie options -- for example, an expires key to define when the cookie will be removed (1 day)
+        Cookies.set('authUser', JSON.stringify(user), { expires: 1 }); //to create a cookie that stores the authenticated user data (user and username) and expires in one day
       }
+      return user;
     }
 
     // signOut = () => {} //removes the authenticated user and password from the global state.
+    signOut = () => {
+      this.setState(() => {
+        return { 
+          authUser: null, //removes the name and username properties from state
+        };
+      }); 
+      Cookies.remove('authUser'); //removes cookie holding authenticated User info
+    }
 
   
 
