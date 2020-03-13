@@ -35,9 +35,9 @@ export default class Courses extends Component {
     render() {
       const courseIndex = this.state.courses;
       const courseLinks = courseIndex.map(course =>
-        <div className="grid-33"><Link to={ `/courses/${ course.id }` } className="course--module course--link" href="course-detail.html">
+        <div className="grid-33" key={ course.id }><Link to={ `/courses/${ course.id }` } className="course--module course--link" href="course-detail.html">
               <h4 className="course--label">Course</h4>
-              <h3 className="course--title">{ course.title }</h3>
+              <h3 className="course--title" >{ course.title }</h3>
             </Link></div>
       )
 

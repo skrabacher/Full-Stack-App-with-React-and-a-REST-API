@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; // adds react features for stateful class component
 import config from './config'; //imports api base url used by the data request methods
-import Cookies from './js-cookie'; //
+import Cookies from 'js-cookie'; //
 
 
 // In React, Context is primarily used when some data needs to be accessible by many components at different nesting levels. Context lets you pass data through the component tree without having to pass props down manually at every level.import React, { Component } from 'react';

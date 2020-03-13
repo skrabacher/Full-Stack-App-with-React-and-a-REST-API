@@ -10,7 +10,7 @@ export default class UserSignIn extends Component {
 state = { //state to hold values entered into form field by users and errors sent from the validation handler
   emailAddress: '',
   password: '',
-  errors: [], //from the form.js validation error handler
+  errors: [], 
 }
 
   render() {
@@ -55,6 +55,19 @@ state = { //state to hold values entered into form field by users and errors sen
     );
   }
   //EVENT HANDLERS
+
+  //change
+  change = (event) => { //saves to state, any changes made to the firstname, lastname, email, confirmpassword, and password input fields
+    const name = event.target.name;
+    const value = event.target.value;
+
+    this.setState(() => {
+      return {
+        [name]: value
+      };
+    });
+  }
+
   submit = () => {
     const { context } = this.props; //extract the context prop from this.props
     const { emailAddress, password } = this.state; 
@@ -62,8 +75,10 @@ state = { //state to hold values entered into form field by users and errors sen
       .then(user => {
         if (user === null) {
           console.log("sign in error");
+          return { errors: [ 'Sign-in was unsuccessful' ] };
         } else {
-          console.log("sign in successful!");
+          this.props.history.push('/'); //redirects to home page after user is signed in
+          console.log(`${emailAddress} is now signed in`); 
         }
       })
   }
