@@ -27,6 +27,7 @@ export default class CreateCourse extends Component {
 				} = this.state;
 		const instructor = this.props.context.authUser;
 		console.log("instructor: ", instructor);
+		console.log("this.props.context.authUser.id: ", this.props.context.authUser.id);
 
         return(
             <div className="bounds course--detail">
@@ -155,7 +156,7 @@ export default class CreateCourse extends Component {
 					} else {
 						context.actions.signIn( instructor.emailAddress, instructor.password )
 						.then(() => {
-							this.props.history.push('/');
+							this.props.history.push('/'); //send user to home page once course created
 						});
 						// this.props.history.push('/');
 					}

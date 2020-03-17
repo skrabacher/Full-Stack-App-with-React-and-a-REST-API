@@ -34,7 +34,8 @@ export class Provider extends Component { /* extends is used to create a sub cla
       if (requiresAuth) { //checks if authorization is needed for the requested endpoint
         const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`); //btoa method encodes emailAddress and Password credentials passed into the api method as args, as a base-64 encoded ASCII string
         options.headers['Authorization'] = `Basic ${encodedCredentials}`;//adds basic auth to the header of our api request via options
-        console.log("options.header: ", options.header);
+        console.log("options.headers.authorization: ", options.headers.Authorization);
+        console.log("options: ", options);
 
       }
 
