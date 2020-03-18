@@ -148,17 +148,18 @@ export default class CreateCourse extends Component {
 				userId
 			};
 			const instructor = this.props.context.authUser;
+			const password = this.props.context.password;
 
-			context.actions.createCourse(course, instructor.emailAddress, instructor.password) //createCourse() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
+			context.actions.createCourse(course, instructor.emailAddress, password) //createCourse() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
 				.then( errors => { //use .then() to get the value of the returned promise and check if it's an error
 					if (errors.length) {
 						console.log("err email: ", instructor.emailAddress);
-						console.log("err password: ", instructor.password);
+						console.log("err password: ", password);
 						this.setState({ errors });
 					} else {
 						console.log("email: ", instructor.emailAddress);
-						console.log("password: ", instructor.password);
-						context.actions.signIn( instructor.emailAddress, instructor.password )
+						console.log("password: ", password);
+						context.actions.signIn( instructor.emailAddress, password )
 						.then(() => {
 							this.props.history.push('/'); //send user to home page once course created
 						});
@@ -166,8 +167,9 @@ export default class CreateCourse extends Component {
 					}
 				})
 				.catch( error => { // handle rejected promise if createCourse() returns a rejected promise
+					console.log("instructor: ", instructor);
 					console.log("catch err email: ", instructor.emailAddress);
-					console.log("catch err password: ", instructor.password);
+					console.log("catch err password: ", password);
 					console.log(error);
 					this.props.history.push('/error'); // redirects user to error route in event of an error
 				});
