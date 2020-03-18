@@ -92,17 +92,14 @@ export class Provider extends Component { /* extends is used to create a sub cla
     signIn = async (emailAddress, password) => { 
       const user = await this.getUser(emailAddress, password); //return format: {name: "<firstName>", emailaddress: "<email>"}
       if (user !== null) { //if credentials received
-        const encryptedPassword = btoa(password);
+        user.password = password;
         this.setState(() => {//set global state to show current user
           return {
             authUser: user,
-            password: encryptedPassword,
           };
         });
         //Cookies.set - 1st arg: specifies the name of the cookie to set, 2nd arg: specifies the value to store in the cookie. In this case, store the stringified user object. Last arg: an object as the last argument to set additional cookie options -- for example, an expires key to define when the cookie will be removed (1 day)
         Cookies.set('authUser', JSON.stringify(user), { expires: 1 }); //to create a cookie that stores the authenticated user data (user and username) and expires in one day
-        Cookies.set('password', JSON.stringify(encryptedPassword), { expires: 1 }); //to create a cookie that stores the authenticated user data (user and username) and expires in one day
-
       }
       return user;
     }
