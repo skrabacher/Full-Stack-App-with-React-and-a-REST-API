@@ -13,6 +13,8 @@ import UserSignOut from './components/UserSignOut';
 import Courses from './components/Courses';
 import CourseDetail from './components/CourseDetail';
 import CreateCourse from './components/CreateCourse';
+import UpdateCourse from './components/UpdateCourse';
+
 
 
 //import Context
