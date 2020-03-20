@@ -1,6 +1,7 @@
 //Stateful Class Component
 // This component provides the "Course Detail" screen by retrieving the detail for a course from the REST API's /api/courses/:id route and rendering the course. The component also renders a "Delete Course" button that when clicked should send a DELETE request to the REST API's /api/courses/:id route in order to delete a course. This component also renders an "Update Course" button for navigating to the "Update Course" screen.
 import React, { Component } from 'react'; /*To add React to a stateful component:*/
+import { Link } from 'react-router-dom';
 
 
 //retrieves data from the REST API
@@ -44,35 +45,44 @@ export default class CourseDetail extends Component {
         const courseDesc = this.state.course.description;
         const courseEstTime = this.state.course.estimatedTime;
         const courseMaterials = this.state.course.materialsNeeded;
-
+        const courseId = this.state.course.id;
 
         console.log("this.state.course: ", this.state.course);
 
         return(
-            <div className="bounds course--detail">
-                <div className="grid-66">
-                <div className="course--header">
-                    <h4 className="course--label">Course</h4>
-                    <h3 className="course--title">{ courseTitle }</h3>
-                    <p>By { instructorFirstName } { instructorLastName }</p>
+            <div >
+                <div className="actions--bar">
+                    <div className="bounds">
+                    <div className="grid-100"><span><Link className="button" to={ `/courses/${ courseId }/update` }>Update Course</Link><Link className="button" to="/">Delete Course</Link></span><Link className="button button-secondary" to="/">Return to List</Link></div>
+                    </div>
                 </div>
-                <div className="course--description">
-                { courseDesc }
-                </div>
-                </div>
-                <div className="grid-25 grid-right">
-                <div className="course--stats">
-                    <ul className="course--stats--list">
-                    <li className="course--stats--list--item">
-                        <h4>Estimated Time</h4>
-                        <h3>{ courseEstTime }</h3>
-                    </li>
-                    <li className="course--stats--list--item">
-                        <h4>Materials Needed</h4>
-                        { courseMaterials }
-                    </li>
-                    </ul>
-                </div>
+
+                <div className="bounds course--detail">
+                    <div className="grid-66">
+
+                    <div className="course--header">
+                        <h4 className="course--label">Course</h4>
+                        <h3 className="course--title">{ courseTitle }</h3>
+                        <p>By { instructorFirstName } { instructorLastName }</p>
+                    </div>
+                    <div className="course--description">
+                    { courseDesc }
+                    </div>
+                    </div>
+                    <div className="grid-25 grid-right">
+                    <div className="course--stats">
+                        <ul className="course--stats--list">
+                        <li className="course--stats--list--item">
+                            <h4>Estimated Time</h4>
+                            <h3>{ courseEstTime }</h3>
+                        </li>
+                        <li className="course--stats--list--item">
+                            <h4>Materials Needed</h4>
+                            { courseMaterials }
+                        </li>
+                        </ul>
+                    </div>
+                    </div>
                 </div>
             </div>
           

@@ -28,6 +28,8 @@ const UserSignOutWithContext = withContext(UserSignOut);
 const CoursesWithContext = withContext(Courses);
 const CourseDetailWithContext = withContext(CourseDetail);
 const CreateCourseWithContext = withContext(CreateCourse);
+const UpdateCourseWithContext = withContext(UpdateCourse);
+
 
 
 export default () => (
@@ -40,6 +42,7 @@ export default () => (
       <Switch>
         <Route exact path="/" component={CoursesWithContext} />
         <Route path="/courses/create" component={CreateCourseWithContext} />
+        <Route path="/courses/:id/update" component={UpdateCourseWithContext} /> 
         <Route path="/courses/:id" component={CourseDetailWithContext} /> 
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signup" component={UserSignUpWithContext} />
@@ -48,6 +51,17 @@ export default () => (
     </div>
   </Router>
 );
+
+
+// //ROUTE ORDER: 
+
+// / - Courses
+// /courses/create - CreateCourse
+// /courses/:id/update - UpdateCourse
+// /courses/:id - CourseDetail
+// /signin - UserSignIn
+// /signup - UserSignUp
+// /signout - UserSignOut
 
 
 //OG CODE
