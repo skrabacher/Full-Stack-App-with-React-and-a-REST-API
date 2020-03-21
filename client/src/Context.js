@@ -77,7 +77,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
       console.log('CreateCourse response: ', response);
       if (response.status === 201) { //if course creation successsful
         return []; //return empty array
-      } else if (response.status === 400) {
+      } else if (response.status === 401) {
         return response.json().then(jsonData => {
           return jsonData.errors;
         });
@@ -96,7 +96,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
       console.log('deleteCourse response: ', response);
       if (response.status === 201) { //if course deletion successsful
         return []; //return empty array
-      } else if (response.status === 400) {
+      } else if (response.status === 401) {
         return response.json().then(jsonData => {
           return jsonData.errors;
         });
@@ -147,7 +147,8 @@ export class Provider extends Component { /* extends is used to create a sub cla
         createUser: this.createUser, //makes createUser available to in context
         api: this.api, //makes api available in context
         createCourse: this.createCourse, //makes createUser available to in context
-        signOut: this.signOut //makes the signOut function available to components with context
+        signOut: this.signOut, //makes the signOut function available to components with context
+        deleteCourse: this.deleteCourse
       }
     };
     

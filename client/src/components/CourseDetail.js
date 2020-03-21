@@ -53,7 +53,7 @@ export default class CourseDetail extends Component {
             <div >
                 <div className="actions--bar">
                     <div className="bounds">
-                    <div className="grid-100"><span><Link className="button" to={ `/courses/${ courseId }/update` }>Update Course</Link><Link className="button" to="/">Delete Course</Link></span><Link className="button button-secondary" to="/">Return to List</Link></div>
+                    <div className="grid-100"><span><Link className="button" to={ `/courses/${ courseId }/update` }>Update Course</Link><Link className="button" to="/" onClick={ this.delete }>Delete Course</Link></span><Link className="button button-secondary" to="/">Return to List</Link></div>
                     </div>
                 </div>
 
@@ -89,4 +89,19 @@ export default class CourseDetail extends Component {
  
         );
     }
+//Delete Button Event Handler
+    delete = () => {
+        const { context } = this.props; // 
+        const { match: { params } } = this.props; //pulls params with course id number by accessing the key/value pair parsed into the route in app.js  
+        console.log(context);
+        console.log(params.id);
+        const courseId = params.id;
+        const emailAddress = context.authUser.emailAddress;
+        const password = context.authUser.password;
+        context.actions.deleteCourse(courseId, emailAddress, password);
+    }
+
+// context.actions.deleteCourse(courseId, instructor.emailAddress, instructor.password)
+
+
 }
