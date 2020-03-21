@@ -91,18 +91,25 @@ export class Provider extends Component { /* extends is used to create a sub cla
     //deleteCourse()
     // The component also renders a "Delete Course" button that when clicked should send a DELETE request to the REST API's /api/courses/:id route in order to delete a course.
     async deleteCourse(courseId, emailAddress, password) {
-      console.log("Deleted CourseId: ", courseId)
-      const response = await this.api(`/courses/${courseId}`, 'DELETE', null, true, { emailAddress, password });
-      console.log('deleteCourse response: ', response);
-      if (response.status === 201) { //if course deletion successsful
-        return []; //return empty array
-      } else if (response.status === 401) {
-        return response.json().then(jsonData => {
-          return jsonData.errors;
-        });
-      } else {
-        throw new Error();
+      try {
+        console.log("Deleted CourseId: ", courseId)
+        const response = await this.api(`/courses/${courseId}`, 'DELETE', null, true, { emailAddress, password });
+        console.log('deleteCourse response: ', response);
+          if (response.status === 201) { //if course deletion successsful
+            return []; //return empty array
+          } else if (response.status === 401) {
+            return response.json().then(jsonData => {
+              return jsonData.errors;
+            });
+          }
       }
+      catch (error) {
+        console.log(error);
+      }
+     
+      // } else {
+      //   throw new Error();
+      // }
     }
 
 
