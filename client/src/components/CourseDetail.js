@@ -53,7 +53,7 @@ export default class CourseDetail extends Component {
             <div >
                 <div className="actions--bar">
                     <div className="bounds">
-                    <div className="grid-100"><span><Link className="button" to={ `/courses/${ courseId }/update` }>Update Course</Link><Link className="button" to="/" onClick={ this.delete }>Delete Course</Link></span><Link className="button button-secondary" to="/">Return to List</Link></div>
+                    <div className="grid-100"><span><Link className="button" to={ `/courses/${ courseId }/update` }>Update Course</Link><button className="button" onClick={ this.delete } >Delete Course</button></span><Link className="button button-secondary" to="/">Return to List</Link></div>
                     </div>
                 </div>
 
@@ -98,7 +98,8 @@ export default class CourseDetail extends Component {
         const courseId = params.id;
         const emailAddress = context.authUser.emailAddress;
         const password = context.authUser.password;
-        context.actions.deleteCourse(courseId, emailAddress, password);
+        context.actions.deleteCourse(courseId, emailAddress, password)
+            .then(window.location.href = "/")
     }
 
 // context.actions.deleteCourse(courseId, instructor.emailAddress, instructor.password)
