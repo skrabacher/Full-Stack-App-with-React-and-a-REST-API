@@ -72,7 +72,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
 
     //createCourse() makes a POST request to the REST API, sending new course data to the /routes endpoint
     async createCourse(course, emailAddress, password) {
-      console.log("Course: ", course)
+      console.log("Create Course Payload: ", course)
       const response = await this.api('/courses', 'POST', course, true, { emailAddress, password }); //api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) credentials = obj w/ emailAddress & password properties
       console.log('CreateCourse response: ', response);
       if (response.status === 201) { //if course creation successsful
@@ -87,6 +87,21 @@ export class Provider extends Component { /* extends is used to create a sub cla
     }
 
     //updateCourse()
+    //sends a PUT request to the REST API's /api/courses/:id route
+    async updateCourse(course, emailAddress, password) {
+      console.log("Update Course Payload:", course)
+      const response = await this.api(`/courses/${course.id}`, 'PUT', course, true, { emailAddress, password }); //api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) credentials = obj w/ emailAddress & password properties
+      console.log('CreateCourse response: ', response);
+      if (response.status === 201) { //if course creation successsful
+        return []; //return empty array
+      } else if (response.status === 401) {
+        return response.json().then(jsonData => {
+          return jsonData.errors;
+        });
+      } else {
+        throw new Error();
+      }
+    }
 
     //deleteCourse()
     // The component also renders a "Delete Course" button that when clicked should send a DELETE request to the REST API's /api/courses/:id route in order to delete a course.
@@ -155,7 +170,8 @@ export class Provider extends Component { /* extends is used to create a sub cla
         api: this.api, //makes api available in context
         createCourse: this.createCourse, //makes createUser available to in context
         signOut: this.signOut, //makes the signOut function available to components with context
-        deleteCourse: this.deleteCourse
+        deleteCourse: this.deleteCourse,
+        updateCourse: this.updateCourse
       }
     };
     
