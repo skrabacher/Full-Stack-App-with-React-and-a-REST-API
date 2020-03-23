@@ -7,7 +7,13 @@ import Form from './Form.js'; //brings in validation error handling and submit a
 export default class UpdateCourse extends Component {
 
     state = { //state to hold form field values
-        course: {},
+        course: {
+            id: "",
+            title: "",
+            description: "",
+            estimatedTime: "",
+            materialsNeeded: ""
+        },
 		errors: [],
         userId: this.props.context.authUser.id,
         instructorFirstName: this.props.context.authUser.firstName,
@@ -37,13 +43,7 @@ export default class UpdateCourse extends Component {
     }
 
     render() {
-        // const courseTitle = this.state.course.title;
-        // const instructorFirstName = this.state.course.instructor.firstName;
-        // const instructorLastName = this.state.course.instructor.lastName;
-        // const courseDesc = this.state.course.description;
-        // const courseEstTime = this.state.course.estimatedTime;
-        // const courseMaterials = this.state.course.materialsNeeded;
-        // const courseId = this.state.course.id;
+     
 
         console.log("this.state.course: ", this.state.course);
         
@@ -93,14 +93,14 @@ export default class UpdateCourse extends Component {
                                             type="text" 
                                             className="input-title course--title--input" 
                                             placeholder={ title } 
-                                            defaultValue={ title }
+                                            value={ title }
                                             onChange={ this.change } 
                                         /></div>
                                         <p>By { instructorFirstName } { instructorLastName }</p>
                                     </div>
 
                                     <div className="course--description">
-                                        <div><textarea id="description" name="description" className placeholder="Course description..." defaultValue={ description } onChange={ this.change } /></div>
+                                        <div><textarea id="description" name="description" className placeholder="Course description..." value={ description } onChange={ this.change } /></div>
                                     </div>
 
                                     </div>
@@ -109,16 +109,16 @@ export default class UpdateCourse extends Component {
                                         <ul className="course--stats--list">
                                         <li className="course--stats--list--item">
                                             <h4>Estimated Time</h4>
-                                            <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={ estimatedTime } onChange={ this.change } /></div>
+                                            <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" value={ estimatedTime } onChange={ this.change } /></div>
                                         </li>
                                         <li className="course--stats--list--item">
                                             <h4>Materials Needed</h4>
-                                            <div><textarea id="materialsNeeded" name="materialsNeeded" className placeholder="List materials..." defaultValue={ materialsNeeded } onChange={ this.change } /></div>
+                                            <div><textarea id="materialsNeeded" name="materialsNeeded" className placeholder="List materials..." value={ materialsNeeded } onChange={ this.change } /></div>
                                         </li>
                                         </ul>
                                     </div>
                                     </div>
-                                    <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick="event.preventDefault(); location.href='course-detail.html';">Cancel</button></div>
+                                    {/* <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick="event.preventDefault(); location.href='course-detail.html';">Cancel</button></div> */}
                                 </React.Fragment>
                             )} />
                            
@@ -153,7 +153,7 @@ export default class UpdateCourse extends Component {
             estimatedTime,
             materialsNeeded,
             userId
-        } = this.state.course; //unpacks all the data stored in state into distinct variables
+        } = this.state; //unpacks all the data stored in state into distinct variables
 
     // New course data to be sent to DB (payload)
         const course = {
@@ -167,6 +167,7 @@ export default class UpdateCourse extends Component {
         const instructor = this.props.context.authUser;
 
         context.actions.updateCourse(course, instructor.emailAddress, instructor.password) //createCourse() is an asynchronous operation that returns a promise. The resolved value of the promise is either an array of errors (sent from the API if the response is 400), or an empty array (if the response is 201).
+
             .then( errors => { //use .then() to get the value of the returned promise and check if it's an error
                 if (errors.length) {
                     console.log("err email: ", instructor.emailAddress);
