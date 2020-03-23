@@ -8,7 +8,6 @@ export default class UpdateCourse extends Component {
 
     state = { //state to hold form field values
         course: {},
-       
 		errors: [],
         userId: this.props.context.authUser.id,
         instructorFirstName: this.props.context.authUser.firstName,
@@ -57,46 +56,89 @@ export default class UpdateCourse extends Component {
         } = course;
         
         console.log("course: ", course);
-         console.log("course.title: ", course.title);
+        console.log("course.title: ", course.title);
 
         const { instructorFirstName } = this.state;
         const { instructorLastName } = this.state;
+        const { errors } = this.state;
 
         return(
           
-                    <div className="bounds course--detail">
-                        <h1>Update Course</h1>
-                        <div>
-                        <form>
-                            <div className="grid-66">
-                            <div className="course--header">
-                                <h4 className="course--label">Course</h4>
-                                <div><input id="title" name="title" type="text" className="input-title course--title--input" placeholder={ title } defaultValue={ title } /></div>
-                                <p>By { instructorFirstName } { instructorLastName }</p>
-                            </div>
-                            <div className="course--description">
-                                <div><textarea id="description" name="description" className placeholder="Course description..." defaultValue={ description } /></div>
-                            </div>
-                            </div>
-                            <div className="grid-25 grid-right">
-                            <div className="course--stats">
-                                <ul className="course--stats--list">
-                                <li className="course--stats--list--item">
-                                    <h4>Estimated Time</h4>
-                                    <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={ estimatedTime } /></div>
-                                </li>
-                                <li className="course--stats--list--item">
-                                    <h4>Materials Needed</h4>
-                                    <div><textarea id="materialsNeeded" name="materialsNeeded" className placeholder="List materials..." defaultValue={ materialsNeeded } /></div>
-                                </li>
-                                </ul>
-                            </div>
-                            </div>
-                            <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick="event.preventDefault(); location.href='course-detail.html';">Cancel</button></div>
-                        </form>
-                        </div>
+            <div className="bounds course--detail">
+                <h1>Update Course</h1>
+                <div>
+                    <div>
+                    <h2 className="validation--errors--label">Validation errors</h2>
+                    <div className="validation-errors">
+                        <ul>
+                        <li>Please provide a value for "Title"</li>
+                        <li>Please provide a value for "Description"</li>
+                        </ul>
                     </div>
-         
+                    </div>
+                        <Form 
+                            cancel={this.cancel}
+                            errors={errors}
+                            submit={this.submit}
+                            submitButtonText="Create Course"
+                            elements={() => (
+                                <React.Fragment>
+                                    <div className="grid-66">
+
+                                    <div className="course--header">
+                                        <h4 className="course--label">Course</h4>
+                                        <div><input 
+                                            id="title" 
+                                            name="title" 
+                                            type="text" 
+                                            className="input-title course--title--input" 
+                                            placeholder={ title } 
+                                            defaultValue={ title }
+                                            onChange={ this.change } 
+                                        /></div>
+                                        <p>By { instructorFirstName } { instructorLastName }</p>
+                                    </div>
+
+                                    <div className="course--description">
+                                        <div><textarea id="description" name="description" className placeholder="Course description..." defaultValue={ description } onChange={ this.change } /></div>
+                                    </div>
+
+                                    </div>
+                                    <div className="grid-25 grid-right">
+                                    <div className="course--stats">
+                                        <ul className="course--stats--list">
+                                        <li className="course--stats--list--item">
+                                            <h4>Estimated Time</h4>
+                                            <div><input id="estimatedTime" name="estimatedTime" type="text" className="course--time--input" placeholder="Hours" defaultValue={ estimatedTime } onChange={ this.change } /></div>
+                                        </li>
+                                        <li className="course--stats--list--item">
+                                            <h4>Materials Needed</h4>
+                                            <div><textarea id="materialsNeeded" name="materialsNeeded" className placeholder="List materials..." defaultValue={ materialsNeeded } onChange={ this.change } /></div>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                    </div>
+                                    <div className="grid-100 pad-bottom"><button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick="event.preventDefault(); location.href='course-detail.html';">Cancel</button></div>
+                                </React.Fragment>
+                            )} />
+                           
+                </div>
+            </div>
+    
         );
     }
+    //EVENT HANDLERS
+    //change
+    change = (event) => { //saves to state, any changes made to the firstname, lastname, email, confirmpassword, and password input fields
+        const name = event.target.name;
+        const value = event.target.value;
+    
+        this.setState(() => {
+          return {
+            course: {
+                [name]: value
+            }
+          };
+        });
+      }
 }
