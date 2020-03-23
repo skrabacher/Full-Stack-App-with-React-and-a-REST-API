@@ -99,7 +99,7 @@ export default class CourseDetail extends Component {
         const emailAddress = context.authUser.emailAddress;
         const password = context.authUser.password;
         context.actions.deleteCourse(courseId, emailAddress, password)
-            .then(window.location.href = "/")
+            .then(window.location.href = "/")// AFTER the course has been deleted user is navigated to home page where they can view the updated and re-rendered course list
     }
 
 // context.actions.deleteCourse(courseId, instructor.emailAddress, instructor.password)
