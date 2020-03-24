@@ -7,8 +7,7 @@ import Form from './Form.js'; //brings in validation error handling and submit a
 export default class UpdateCourse extends Component {
 
     state = { //state to hold form field values
-        course: { /// Remove course object and just use properties in state e.g. course.id
-            id: "",
+        course: { 
             title: "",
             description: "",
             estimatedTime: "",
