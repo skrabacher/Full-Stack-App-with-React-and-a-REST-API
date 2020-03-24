@@ -20,6 +20,9 @@ import UpdateCourse from './components/UpdateCourse';
 //import Context
 import withContext from './Context'; // withContext function from Context.js
 
+//import private route (limits access to certain pages, like create course, to signed in users only)
+import PrivateRoute from './PrivateRoute';
+
 //make context available to specific components
 const HeaderWithContext = withContext(Header);
 const UserSignUpWithContext = withContext(UserSignUp); // This connects the UserSignUp component to context. In other words, UserSignUp is now a consuming component that's subscribed to all context changes.
@@ -41,8 +44,8 @@ export default () => (
 
       <Switch>
         <Route exact path="/" component={CoursesWithContext} />
-        <Route path="/courses/create" component={CreateCourseWithContext} />
-        <Route path="/courses/:id/update" component={UpdateCourseWithContext} /> 
+        <PrivateRoute path="/courses/create" component={CreateCourseWithContext} />
+        <PrivateRoute path="/courses/:id/update" component={UpdateCourseWithContext} /> 
         <Route path="/courses/:id" component={CourseDetailWithContext} /> 
         <Route path="/signin" component={UserSignInWithContext} />
         <Route path="/signup" component={UserSignUpWithContext} />
