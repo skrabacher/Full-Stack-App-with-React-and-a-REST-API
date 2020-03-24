@@ -20,7 +20,7 @@ import UpdateCourse from './components/UpdateCourse';
 //import Context
 import withContext from './Context'; // withContext function from Context.js
 
-//import private route (limits access to certain pages, like create course, to signed in users only)
+//import private route (any route designated as a PrivateRoute will require user sign in, if user not signed in will redirect to sign in page)
 import PrivateRoute from './PrivateRoute';
 
 //make context available to specific components

@@ -70,6 +70,7 @@ state = { //state to hold values entered into form field by users and errors sen
 
   submit = () => {
     const { context } = this.props; //extract the context prop from this.props
+    const { from } = this.props.location.state || { from: { pathname: '/' } }; //information about the pathname an unauthenticated user redirected from (via this.props.location.state). For example, if a user redirects to the sign up page from /settings, from will be equal to pathname: "/settings".
     const { emailAddress, password } = this.state; 
     context.actions.signIn(emailAddress, password)
       .then(user => {
@@ -77,7 +78,7 @@ state = { //state to hold values entered into form field by users and errors sen
           console.log("sign in error");
           return { errors: [ 'Sign-in was unsuccessful' ] };
         } else {
-          this.props.history.push('/'); //redirects to home page after user is signed in
+          this.props.history.push(from); //redirects to page user was on prior to sign in page(takes them back to where they were before signin)
           console.log(`${emailAddress} is now signed in`); 
         }
       })
