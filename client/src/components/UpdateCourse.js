@@ -7,7 +7,7 @@ import Form from './Form.js'; //brings in validation error handling and submit a
 export default class UpdateCourse extends Component {
 
     state = { //state to hold form field values
-        course: {
+        course: { /// Remove course object and just use properties in state e.g. course.id
             id: "",
             title: "",
             description: "",
@@ -132,14 +132,15 @@ export default class UpdateCourse extends Component {
     change = (event) => { //saves to state, any changes made to the firstname, lastname, email, confirmpassword, and password input fields
         const name = event.target.name;
         const value = event.target.value;
-    
-        this.setState(() => {
-          return {
-            course: {
-                [name]: value
-            }
-          };
-        });
+            this.setState(() => {
+                return {
+                    course: {
+                        ...this.state.course, //keeps all unchanged properties in state's course object
+                      [name]: value //updates any changed properties in state's course object
+                    }
+                };
+              });
+        
       }
 
     //submit
@@ -153,7 +154,7 @@ export default class UpdateCourse extends Component {
             estimatedTime,
             materialsNeeded,
             userId
-        } = this.state; //unpacks all the data stored in state into distinct variables
+        } = this.state.course; //unpacks all the data stored in state into distinct variables
 
     // New course data to be sent to DB (payload)
         const course = {

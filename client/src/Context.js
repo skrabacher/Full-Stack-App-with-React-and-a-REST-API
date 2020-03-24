@@ -92,7 +92,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
       console.log("Update Course Payload:", course)
       const response = await this.api(`/courses/${course.id}`, 'PUT', course, true, { emailAddress, password }); //api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) credentials = obj w/ emailAddress & password properties
       console.log('CreateCourse response: ', response);
-      if (response.status === 201) { //if course creation successsful
+      if (response.status === 204) { //if course creation successsful
         return []; //return empty array
       } else if (response.status === 401) {
         return response.json().then(jsonData => {
