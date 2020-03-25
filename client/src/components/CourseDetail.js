@@ -4,9 +4,7 @@ import React, { Component } from 'react'; /*To add React to a stateful component
 import { Link } from 'react-router-dom';
 
 
-//retrieves data from the REST API
-
-
+import ReactMarkdown from 'react-markdown'; // REACT MARKDOWN basic usage: https://www.npmjs.com/package/react-markdown // const ReactMarkdown = require('react-markdown');
 
 //Pro Tip: Resist the temptation to keep and manage the courses data as global state in the App component. Instead, allow the Courses and CourseDetail components to retrieve their data from the REST API when those components are mounted. Using this approach simplifies the management of the courses data and ensures that the data won't get out of sync with the REST API's persisted data.
 
@@ -42,12 +40,15 @@ export default class CourseDetail extends Component {
         const courseTitle = this.state.course.title;
         const instructorFirstName = this.state.course.instructor.firstName;
         const instructorLastName = this.state.course.instructor.lastName;
-        const courseDesc = this.state.course.description;
+        const courseDesc = `${this.state.course.description}`; //converts variable to string for ReactMarkdown 
         const courseEstTime = this.state.course.estimatedTime;
-        const courseMaterials = this.state.course.materialsNeeded;
+        const courseMaterials = `${this.state.course.materialsNeeded}`; //converts variable to string for ReactMarkdown 
         const courseId = this.state.course.id;
         const authUser = this.props.context.authUser;
         const instructorId = this.state.course.instructor.id;
+
+        console.log("courseMaterials: ", courseMaterials);
+        console.log("courseMaterials TYPE: ", typeof courseMaterials); //STRING :) 
 
         console.log("this.state.course: ", this.state.course);
         console.log("this.props.context.authUser ", this.props.context.authUser);
@@ -86,7 +87,7 @@ export default class CourseDetail extends Component {
                         <p>By { instructorFirstName } { instructorLastName }</p>
                     </div>
                     <div className="course--description">
-                    { courseDesc }
+                        <ReactMarkdown source={ courseDesc }  />
                     </div>
                     </div>
                     <div className="grid-25 grid-right">
@@ -98,7 +99,7 @@ export default class CourseDetail extends Component {
                         </li>
                         <li className="course--stats--list--item">
                             <h4>Materials Needed</h4>
-                            { courseMaterials }
+                                <ReactMarkdown source={ courseMaterials }  />
                         </li>
                         </ul>
                     </div>
