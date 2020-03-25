@@ -101,10 +101,10 @@ const passwordVC = check('password')
   .withMessage('Please provide a value for "Password"');
 const titleVC = check('title')
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please provide a value for "zTitle"');
+  .withMessage('Please provide a value for "Title"');
 const descriptionVC = check('description')
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please provide a value for "zDescription"');
+  .withMessage('Please provide a value for "Description"');
 
 
 // *USER ROUTES*

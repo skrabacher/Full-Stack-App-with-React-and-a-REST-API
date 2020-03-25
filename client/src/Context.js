@@ -57,12 +57,14 @@ export class Provider extends Component { /* extends is used to create a sub cla
 
      //createUser() makes a POST request, sending new user data to the /users endpoint
      async createUser(user) { //modeled using data.js from React Authentication Workshop
+      console.log("Create UserPayload: ", user)
       const response = await this.api('/users', 'POST', user);
       if (response.status === 201) { //if user creation successful
         return [];  //return empty array
       }
       else if (response.status === 400) {
         return response.json().then(jsonData => {
+          console.log("createUser jsonData.errors: ", jsonData.errors)
           return jsonData.errors;
         });
       } else {
@@ -77,8 +79,9 @@ export class Provider extends Component { /* extends is used to create a sub cla
       console.log('CreateCourse response: ', response);
       if (response.status === 201) { //if course creation successsful
         return []; //return empty array
-      } else if (response.status === 401) {
+      } else if (response.status === 400) {
         return response.json().then(jsonData => {
+          console.log("createCourse jsonData.errors: ", jsonData.errors)
           return jsonData.errors;
         });
       } else {
@@ -94,7 +97,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
       console.log('CreateCourse response: ', response);
       if (response.status === 204) { //if course creation successsful
         return []; //return empty array
-      } else if (response.status === 401) {
+      } else if (response.status === 400) {
         return response.json().then(jsonData => {
           return jsonData.errors;
         });
