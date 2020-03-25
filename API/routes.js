@@ -76,15 +76,16 @@ const authenticateUser = async (req, res, next) => {
 // check() returns a "validation chain". Any number of validation methods can be called on a validation chain to validate a field. 
 const firstNameVC = check('firstName') //parameter is the model field that will be checked
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please provide a value for "firstName"');
+  .withMessage('Please provide a value for "First Name"');
 const lastNameVC = check('lastName')
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please provide a value for "lastName"');
+  .withMessage('Please provide a value for "Last Name"');
 const emailVC = check('emailAddress')
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please provide a value for "emailAddress"')
+  .withMessage('Please provide a value for "Email Address"')
+  .bail()
   .isEmail()
-  .withMessage('Please provide a valid email address')
+  .withMessage('Please provide a valid "Email Address"')
   //CHECKING IF EMAIL ALREADY IN USER custom validation for email modeled after: https://express-validator.github.io/docs/custom-validators-sanitizers.html
   .custom(async (value) => { const user = await User.findOne({ 
     where: { 
@@ -97,13 +98,13 @@ const emailVC = check('emailAddress')
   });
 const passwordVC = check('password')
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please provide a value for "password"');
+  .withMessage('Please provide a value for "Password"');
 const titleVC = check('title')
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please provide a value for "title"');
+  .withMessage('Please provide a value for "zTitle"');
 const descriptionVC = check('description')
   .exists({ checkNull: true, checkFalsy: true })
-  .withMessage('Please provide a value for "description"');
+  .withMessage('Please provide a value for "zDescription"');
 
 
 // *USER ROUTES*
