@@ -186,6 +186,6 @@ export default class UpdateCourse extends Component {
     //cancel
     //If a user decides to cancel registration, we will redirect them back to the home route upon clicking "Cancel".
     cancel = () => {
-        this.props.history.push('/'); //redirects to homepage
+        this.props.history.push(`/courses/${this.state.course.id}`); //redirects to course detail page
     }
 }
