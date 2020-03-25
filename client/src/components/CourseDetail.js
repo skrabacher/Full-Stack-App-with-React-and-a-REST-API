@@ -15,7 +15,7 @@ export default class CourseDetail extends Component {
     state = { //state with empty array to hold courses
         course: {
             instructor: {},
-        },
+        }
       }
     
       //makes a GET request to the /courses/:id endpoint and returns a single course object with these properties: id, title, description, estimatedTime, materialsNeeded
@@ -46,14 +46,34 @@ export default class CourseDetail extends Component {
         const courseEstTime = this.state.course.estimatedTime;
         const courseMaterials = this.state.course.materialsNeeded;
         const courseId = this.state.course.id;
+        const authUser = this.props.context.authUser;
+        const instructorId = this.state.course.instructor.id;
 
         console.log("this.state.course: ", this.state.course);
+        console.log("this.props.context.authUser ", this.props.context.authUser);
+        console.log("this.state.course: ", this.state.course);
+        console.log("this.state.course: ", this.state.course);
+
 
         return(
             <div >
                 <div className="actions--bar">
                     <div className="bounds">
-                    <div className="grid-100"><span><Link className="button" to={ `/courses/${ courseId }/update` }>Update Course</Link><button className="button" onClick={ this.delete } >Delete Course</button></span><Link className="button button-secondary" to="/">Return to List</Link></div>
+                    { (authUser !== null && authUser.id === instructorId) ?
+                        <div className="grid-100">
+                            <span>
+                                <Link className="button" to={ `/courses/${ courseId }/update` }>Update Course</Link>
+                                <button className="button" onClick={ this.delete } >Delete Course</button>
+                            </span>
+                            <Link className="button button-secondary" to="/">Return to List</Link>
+                        </div>
+                    :
+                        <div className="grid-100">
+                            <Link className="button button-secondary" to="/">Return to List</Link>
+                        </div>
+                    }
+
+                    
                     </div>
                 </div>
 
