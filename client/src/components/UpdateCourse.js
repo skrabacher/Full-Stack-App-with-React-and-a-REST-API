@@ -91,7 +91,7 @@ export default class UpdateCourse extends Component {
                                     </div>
 
                                     <div className="course--description">
-                                        <div><textarea id="description" name="description" className placeholder="Course description..." value={ description } onChange={ this.change } /></div>
+                                        <div><textarea id="description" name="description" placeholder="Course description..." value={ description } onChange={ this.change } /></div>
                                     </div>
 
                                     </div>
