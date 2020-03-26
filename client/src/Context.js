@@ -28,14 +28,14 @@ export class Provider extends Component { /* extends is used to create a sub cla
 
       if (body !== null) {
         options.body = JSON.stringify(body); //converts pulled data to JSON String (translates the data so the app can use it)
-        console.log("options.body: ", options.body);
+        // console.log("options.body: ", options.body);
       }
       
       if (requiresAuth) { //checks if authorization is needed for the requested endpoint
         const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`); //btoa method encodes emailAddress and Password credentials passed into the api method as args, as a base-64 encoded ASCII string
         options.headers['Authorization'] = `Basic ${encodedCredentials}`;//adds basic auth to the header of our api request via options
-        console.log("options.headers.authorization: ", options.headers.Authorization);
-        console.log("options: ", options);
+        // console.log("options.headers.authorization: ", options.headers.Authorization);
+        // console.log("options: ", options);
 
       }
 
@@ -57,14 +57,14 @@ export class Provider extends Component { /* extends is used to create a sub cla
 
      //createUser() makes a POST request, sending new user data to the /users endpoint
      async createUser(user) { //modeled using data.js from React Authentication Workshop
-      console.log("Create UserPayload: ", user)
+      // console.log("Create UserPayload: ", user)
       const response = await this.api('/users', 'POST', user);
       if (response.status === 201) { //if user creation successful
         return [];  //return empty array
       }
       else if (response.status === 400) {
         return response.json().then(jsonData => {
-          console.log("createUser jsonData.errors: ", jsonData.errors)
+          // console.log("createUser jsonData.errors: ", jsonData.errors)
           return jsonData.errors;
         });
       } else {
@@ -74,14 +74,14 @@ export class Provider extends Component { /* extends is used to create a sub cla
 
     //createCourse() makes a POST request to the REST API, sending new course data to the /routes endpoint
     async createCourse(course, emailAddress, password) {
-      console.log("Create Course Payload: ", course)
+      // console.log("Create Course Payload: ", course)
       const response = await this.api('/courses', 'POST', course, true, { emailAddress, password }); //api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) credentials = obj w/ emailAddress & password properties
-      console.log('CreateCourse response: ', response);
+      // console.log('CreateCourse response: ', response);
       if (response.status === 201) { //if course creation successsful
         return []; //return empty array
       } else if (response.status === 400) {
         return response.json().then(jsonData => {
-          console.log("createCourse jsonData.errors: ", jsonData.errors)
+          // console.log("createCourse jsonData.errors: ", jsonData.errors)
           return jsonData.errors;
         });
       } else {
@@ -92,9 +92,9 @@ export class Provider extends Component { /* extends is used to create a sub cla
     //updateCourse()
     //sends a PUT request to the REST API's /api/courses/:id route
     async updateCourse(course, emailAddress, password) {
-      console.log("Update Course Payload:", course)
+      // console.log("Update Course Payload:", course)
       const response = await this.api(`/courses/${course.id}`, 'PUT', course, true, { emailAddress, password }); //api(path, method = 'GET', body = null, requiresAuth = false, credentials = null) credentials = obj w/ emailAddress & password properties
-      console.log('CreateCourse response: ', response);
+      // console.log('CreateCourse response: ', response);
       if (response.status === 204) { //if course creation successsful
         return []; //return empty array
       } else if (response.status === 400) {
@@ -110,9 +110,9 @@ export class Provider extends Component { /* extends is used to create a sub cla
     // The component also renders a "Delete Course" button that when clicked should send a DELETE request to the REST API's /api/courses/:id route in order to delete a course.
     async deleteCourse(courseId, emailAddress, password) {
       try {
-        console.log("Deleted CourseId: ", courseId)
+        // console.log("Deleted CourseId: ", courseId)
         const response = await this.api(`/courses/${courseId}`, 'DELETE', null, true, { emailAddress, password });
-        console.log('deleteCourse response: ', response);
+        // console.log('deleteCourse response: ', response);
           if (response.status === 201) { //if course deletion successsful
             return []; //return empty array
           } else if (response.status === 401) {
@@ -122,7 +122,7 @@ export class Provider extends Component { /* extends is used to create a sub cla
           }
       }
       catch (error) {
-        console.log(error);
+        // console.log(error);
       }
      
       // } else {

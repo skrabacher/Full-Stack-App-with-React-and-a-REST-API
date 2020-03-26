@@ -131,7 +131,7 @@ export default class UserSignUp extends Component {
         }
       })
       .catch( error => { // handle rejected promise if createUser() returns a rejected promise
-        console.log(error);
+        // console.log(error);
         this.props.history.push('/error'); // redirects user to error route in event of an error
       }); 
     } else {

@@ -18,20 +18,20 @@ export default class CourseDetail extends Component {
     
       //makes a GET request to the /courses/:id endpoint and returns a single course object with these properties: id, title, description, estimatedTime, materialsNeeded
       async componentDidMount() { 
-          console.log("in componentDidMount coursedetail")
+        //   console.log("in componentDidMount coursedetail")
         const { match: { params } } = this.props; //pulls params with course id number by accessing the key/value pair parsed into the route in app.js  
         const { context } = this.props; //extracts context from props so we can access context.actions
         const response = await context.actions.api(`/courses/${params.id}`);//uses api method to make request to course detail route
         if (response.status === 200) { //if request response is returned OKAY
-            console.log("200");
+            // console.log("200");
           return response.json()//format response to json
             // .then(jsonData => console.log("jsonData: ", jsonData)); 
             .then(jsonData => this.setState({course: jsonData }));
         } else if (response.status === 401) { //if request can not be authenticated
-            console.log("401");
+            // console.log("401");
           return null; //return nothing
         } else { // if anything else
-            console.log("throw new");
+            // console.log("throw new");
           throw new Error();
         }
       }
@@ -47,13 +47,13 @@ export default class CourseDetail extends Component {
         const authUser = this.props.context.authUser;
         const instructorId = this.state.course.instructor.id;
 
-        console.log("courseMaterials: ", courseMaterials);
-        console.log("courseMaterials TYPE: ", typeof courseMaterials); //STRING :) 
+        // console.log("courseMaterials: ", courseMaterials);
+        // console.log("courseMaterials TYPE: ", typeof courseMaterials); //STRING :) 
 
-        console.log("this.state.course: ", this.state.course);
-        console.log("this.props.context.authUser ", this.props.context.authUser);
-        console.log("this.state.course: ", this.state.course);
-        console.log("this.state.course: ", this.state.course);
+        // console.log("this.state.course: ", this.state.course);
+        // console.log("this.props.context.authUser ", this.props.context.authUser);
+        // console.log("this.state.course: ", this.state.course);
+        // console.log("this.state.course: ", this.state.course);
 
 
         return(
@@ -114,8 +114,8 @@ export default class CourseDetail extends Component {
     delete = () => {
         const { context } = this.props; // 
         const { match: { params } } = this.props; //pulls params with course id number by accessing the key/value pair parsed into the route in app.js  
-        console.log(context);
-        console.log(params.id);
+        // console.log(context);
+        // console.log(params.id);
         const courseId = params.id;
         const emailAddress = context.authUser.emailAddress;
         const password = context.authUser.password;

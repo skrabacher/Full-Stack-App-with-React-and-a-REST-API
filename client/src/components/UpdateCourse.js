@@ -21,22 +21,22 @@ export default class UpdateCourse extends Component {
       
     //makes a GET request to the /courses/:id endpoint and returns a single course object with these properties: id, title, description, estimatedTime, materialsNeeded
     async componentDidMount() { 
-        console.log("in componentDidMount updatecourse")
+        // console.log("in componentDidMount updatecourse")
         const { match: { params } } = this.props; //pulls params with course id number by accessing the key/value pair parsed into the route in app.js  
         const { context } = this.props; //extracts context from props so we can access context.actions
         const response = await context.actions.api(`/courses/${params.id}`);//uses api method to make request to course detail route
-        console.log("response :", response);
+        // console.log("response :", response);
         if (response.status === 200) { //if request response is returned OKAY
-            console.log("200");
+            // console.log("200");
         return response.json()//format response to json
             // .then(jsonData => console.log("jsonData: ", jsonData)); 
             .then(jsonData => this.setState({course: jsonData }))
-                .then(console.log("this.state: ", this.state));
+                // .then(console.log("this.state: ", this.state));
         } else if (response.status === 401) { //if request can not be authenticated
-            console.log("401");
+            // console.log("401");
         return null; //return nothing
         } else { // if anything else
-            console.log("throw new");
+            // console.log("throw new");
         throw new Error();
         }
     }

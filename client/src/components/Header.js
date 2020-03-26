@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'; //adds functionality for "click here" l
 export default class Header extends React.PureComponent { //Performance improvement: adding pure component feature allows use of the shouldcomponentUpdate() lifecycle method which skips re-rendering when the state and props have not changed
   render() {
     const authUser = this.props.context.authUser;
-    console.log("authUser status: ", authUser); 
+    // console.log("authUser status: ", authUser); 
     return (
       <div className="header">
           <div className="bounds">

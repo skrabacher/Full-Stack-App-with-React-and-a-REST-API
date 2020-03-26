@@ -75,11 +75,11 @@ state = { //state to hold values entered into form field by users and errors sen
     context.actions.signIn(emailAddress, password)
       .then(user => {
         if (user === null) {
-          console.log("sign in error");
+          // console.log("sign in error");
           return { errors: [ 'Sign-in was unsuccessful' ] };
         } else {
           this.props.history.push(from); //redirects to page user was on prior to sign in page(takes them back to where they were before signin)
-          console.log(`${emailAddress} is now signed in`); 
+          // console.log(`${emailAddress} is now signed in`); 
         }
       })
   }
