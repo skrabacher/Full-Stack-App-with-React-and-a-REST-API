@@ -135,7 +135,7 @@ export default class UserSignUp extends Component {
         this.props.history.push('/error'); // redirects user to error route in event of an error
       }); 
     } else {
-    this.setState( {errors: [{message: "Error: Password and Password Confirmation do not match"}]})
+    this.setState( {errors: ["Error: Password and Password Confirmation do not match"]});
     }
     
   }
