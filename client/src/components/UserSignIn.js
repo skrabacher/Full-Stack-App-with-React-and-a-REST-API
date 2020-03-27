@@ -76,7 +76,8 @@ state = { //state to hold values entered into form field by users and errors sen
       .then(user => {
         if (user === null) {
           // console.log("sign in error");
-          return { errors: [ 'Sign-in was unsuccessful' ] };
+          // return { errors: [ 'Sign-in was unsuccessful' ] };
+          this.setState( {errors: ["Error: Sign-in unsuccessful, please check to make sure you are using the correct email and password"]});
         } else {
           this.props.history.push(from); //redirects to page user was on prior to sign in page(takes them back to where they were before signin)
           // console.log(`${emailAddress} is now signed in`); 
